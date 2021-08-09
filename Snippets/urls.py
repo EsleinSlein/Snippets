@@ -14,12 +14,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
-
+from django.conf import settings
+from django.conf.urls.static import static
 from MainApp import views
 
 urlpatterns = [
-    path('', views.index_page),
-    path('snippets/add', views.add_snippet_page),
-    path('snippets/list', views.snippets_page),
-]
+    path('', views.index_page, name="Home"),
+    path('snippets/add', views.add_snippet_page, name="add-snippet"),
+    path('snippet/<int:id>', views.snippet, name="snippet-page"),
+    path('snippets/list', views.snippets_page, name="list-snippet"),
+    path('form-data/', views.form_data,),
+    path('snippets/edit/<int:id>/', views.edit, name="edit-snippet"),
+    path('snippets/delete/<int:id>/', views.delete),
+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
 
