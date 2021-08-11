@@ -23,9 +23,13 @@ urlpatterns = [
     path('snippets/add', views.add_snippet_page, name="add-snippet"),
     path('snippet/<int:id>', views.snippet, name="snippet-page"),
     path('snippets/list', views.snippets_page, name="list-snippet"),
-    path('form-data/', views.form_data,),
-    path('snippets/edit/<int:id>/', views.edit, name="edit-snippet"),
-    path('snippets/delete/<int:id>/', views.delete),
+    path('snippets/my_list', views.my_snippets, name="my_list-snippet"),
+    path('snippet/delete/<int:id>', views.delete_snippet_page, name="snippet-delete"),
+    path('snippet/edit/<int:id>', views.edit_snippet_page, name="snippet-edit"),
+    path('login', views.login, name="login"),
+    path('logout', views.logout, name="logout"),
+    path('register', views.register, name="register"),
+
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 

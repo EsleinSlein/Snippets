@@ -1,0 +1,22 @@
+[
+  {
+    "model": "MainApp.snippet",
+    "pk": 8,
+    "fields": {
+      "name": "xzc",
+      "lang": "py",
+      "code": "zxczs",
+      "creation_date": "2021-08-10T11:46:26.921Z"
+    }
+  },
+  {
+    "model": "MainApp.snippet",
+    "pk": 10,
+    "fields": {
+      "name": "dwds",
+      "lang": "py",
+      "code": "xcfa",
+      "creation_date": "2021-08-10T12:10:57.615Z"
+    }
+  }
+]

@@ -1,59 +1,36 @@
 {% extends 'base.html' %}
+{% block styles %}
+<style>
+    .red{
+        color: green;
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-
-<!-- Begin page content -->
-<main role="main" class="mt-3 flex-shrink-0">
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <h1>{{ pagename }}</h1>
-                <hr>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col">
-                <form action="/form-data/" method="post">
-                    {% csrf_token %}
-                    <div class="form-group row">
-                        <div class="col-sm-8">
-                            <input name="name" type="text" class="form-control form-control-lg" placeholder="Название сниппета">
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-sm-8">
-                            <select name="lang">
-                                <option>C++</option>
-                                 <option>Python</option>
-                                 <option>Java</option>
-                            </select>
-<!--                            <div class="dropdown">-->
-<!--                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"-->
-<!--                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-<!--                                    Язык сниппета-->
-<!--                                </button>-->
-<!--                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">-->
-<!--                                    <a class="dropdown-item" href="#">Python</a>-->
-<!--                                    <a class="dropdown-item" href="#">JavaScript</a>-->
-<!--                                    <a class="dropdown-item" href="#">C++</a>-->
-<!--                                </div>-->
-<!--                            </div>-->
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col">
-                            <textarea name="code" cols="96" rows="10" placeholder="Код сниппета"></textarea>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-8">
-                            <input type="submit" class="btn btn-primary btn-block" value="Сохранить">
-                        </div>
-                    </div>
-                </form>
-
-            </div>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1>{{ pagename }}</h1>
+            <hr>
         </div>
     </div>
-</main>
+
+    <div class="row">
+        <div class="col">
+            <form action="" method="post">
+                {% csrf_token %}
+                <table>
+                    {{ form.as_table }}
+                </table>
+                <div class="form-group row">
+                    <div class="col-8">
+                        <input type="submit" class="btn btn-primary btn-block" value="Сохранить">
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
 {% endblock %}

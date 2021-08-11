@@ -1,5 +1,11 @@
 {% extends 'base.html' %}
-
+{% block styles %}
+<style>
+    .fa-ban {
+        color: red;
+    }
+</style>
+{% endblock %}
 {% block content %}
 <div class="container">
     <div class="row">
@@ -24,7 +30,7 @@
                     <th scope="col">ID</th>
                     <th scope="col">Название</th>
                     <th scope="col">Дата создания</th>
-                     <th scope="col">Редактирование</th>
+                    <th scope="col">Создатель</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -32,15 +38,21 @@
                 {% for snippet in snippets %}
                 <tr>
                     <td scope="row">{{ snippet.id }}</td>
-                    <td><a href="{% url 'snippet-page' snippet.id %}" >{{ snippet.name }}</a></td>
+                    <td>
+                        <a href="{% url 'snippet-page' snippet.id %}" >{{ snippet.name }}</a>
+                        {% if request.user == snippet.user %}
+                        <a href="{% url 'snippet-edit' snippet.id %}"> <i style="color: green" class="far fa-edit"></i></a>
+                        <a  href="{% url 'snippet-delete' snippet.id %}"> <i style="color: #c31212 " class="fas fa-trash"></i></a>
+                 {% endif %}
+                    </td>
                     <td>{{ snippet.creation_date }}</td>
-                    <td><a style="text-decoration: none" href="edit/{{snippet.id}}">Изменить</a> | <a style="text-decoration: none" href="delete/{{snippet.id}}">Удалить</a></td>
+                    <td>{{ snippet.user | default:"Отсутствует"}}</td>
                 </tr>
                 {% endfor %}
                 </tbody>
             </table>
             <div align="right">
-                <i style="color: gray;">Всего сниппетов: </i>
+                <i style="color: gray;">Всего сниппетов: {{counter}}</i>
             </div>
         </div>
     </div>
