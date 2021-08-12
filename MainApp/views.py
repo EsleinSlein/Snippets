@@ -1,7 +1,7 @@
 from django.http import Http404
 from django.shortcuts import render, redirect
 from MainApp.models import Snippet
-from MainApp.forms import SnippetForm ,UserRegistrationForm
+from MainApp.forms import SnippetForm ,UserRegistrationForm, CommentForm
 from django.template.context_processors import csrf
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
@@ -34,13 +34,6 @@ def delete_snippet_page(request, id):
     snippet.delete()
     return redirect('list-snippet')
 
-def my_snippets(request):
-    snippet = Snippet.objects.filter(user_id = request.user)
-    snippets = snippet
-    counter = snippets.count
-    context = {'pagename': 'Мои сниппеты', "snippets": snippets, "counter": counter}
-    return render(request, 'pages/view_snippets.html', context)
-
 
 @login_required
 def edit_snippet_page(request, id):
@@ -59,21 +52,28 @@ def edit_snippet_page(request, id):
     return redirect('list-snippet')
 
 
+def my_snippets(request):
+    snippets = Snippet.objects.filter(user_id=request.user)
+    counter = snippets.count
+    context = {'pagename': 'Мои сниппеты', "snippets": snippets, "counter": counter}
+    return render(request, 'pages/view_snippets.html', context)
+
+
 def snippets_page(request):
     snippets = Snippet.objects.all()
     counter = snippets.count
     if request.user.is_authenticated:
         snippets = Snippet.objects.all()
-
         context = {'pagename': 'Просмотр сниппетов', "snippets": snippets, "counter": counter}
         return render(request, 'pages/view_snippets.html', context)
-    context = {'pagename': 'Просмотр сниппетов', "snippets": snippets, "counter": counter}
+    context = {'pagename': 'Просмотр сниппетов', "snippets": snippets, "counter": counter, "private": True}
     return render(request, 'pages/view_snippets.html', context)
 
 
 def snippet(request, id):
     snippet = Snippet.objects.get(pk=id)
-    context = {'pagename': 'Страница сниппета', "snippet": snippet}
+    form_comment = CommentForm()
+    context = {'pagename': 'Страница сниппета', "snippet": snippet, 'form_comment':form_comment}
     return render(request, 'pages/snippet-info.html', context)
 
 
@@ -107,3 +107,19 @@ def register(request):
         return redirect('Home')
     context = {"form": form}
     return render(request, 'pages/register_page.html', context)
+
+@login_required
+def comment_add(request):
+    if request.method == "POST":
+        form_comment = CommentForm(request.POST,request.FILES)
+        snippet_id = request.POST["snippet_id"]
+        if form_comment.is_valid():
+            snippet = Snippet.objects.get(id= snippet_id)
+            comment = form_comment.save(commit=False)
+            comment.author = request.user
+            comment.snippet = snippet
+            comment.save()
+        return redirect(f'/snippet/{snippet_id}')
+    raise Http404
+
+

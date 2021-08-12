@@ -17,6 +17,9 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from MainApp import views
+from MainApp.templatetags import my_tags
+
+
 
 urlpatterns = [
     path('', views.index_page, name="Home"),
@@ -29,7 +32,11 @@ urlpatterns = [
     path('login', views.login, name="login"),
     path('logout', views.logout, name="logout"),
     path('register', views.register, name="register"),
+    path('comment/add', views.comment_add, name="comment_add"),
+    path('snippet/ID_filter', my_tags.ID_filter, name="ID_filter"),
+    path('snippet/lang_filter', my_tags.lang_filter, name="lang_filter"),
 
-]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \
+              +static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

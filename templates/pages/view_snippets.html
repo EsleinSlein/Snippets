@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
+{% load my_tags %}
 {% block styles %}
 <style>
     .fa-ban {
         color: red;
     }
+
 </style>
 {% endblock %}
 {% block content %}
@@ -21,7 +23,19 @@
             <hr>
         </div>
     </div>
+    <form action="{% url 'lang_filter' %}" id="view_snippet_form" method="post">
+        {% csrf_token %}
 
+        <label class="col">Язык программирования:
+            <select style="width:100px" name="lang_filter" required="" id="id_lang">
+                <option value="" selected="">---------</option>
+                <option value="py">py</option>
+                <option value="js">js</option>
+                <option value="cpp">cpp</option>
+
+            </select>
+            <input type="submit" value="Применить фильтр"></label>
+    </form>
     <div class="row">
         <div class="col">
             <table class="table table-striped">
@@ -29,6 +43,7 @@
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">Название</th>
+                    <th scope="col">Язык</th>
                     <th scope="col">Дата создания</th>
                     <th scope="col">Создатель</th>
                 </tr>
@@ -39,12 +54,14 @@
                 <tr>
                     <td scope="row">{{ snippet.id }}</td>
                     <td>
-                        <a href="{% url 'snippet-page' snippet.id %}" >{{ snippet.name }}</a>
+                        <a href="{% url 'snippet-page' snippet.id %}">{{ snippet.name }}</a>
                         {% if request.user == snippet.user %}
                         <a href="{% url 'snippet-edit' snippet.id %}"> <i style="color: green" class="far fa-edit"></i></a>
-                        <a  href="{% url 'snippet-delete' snippet.id %}"> <i style="color: #c31212 " class="fas fa-trash"></i></a>
-                 {% endif %}
+                        <a href="{% url 'snippet-delete' snippet.id %}"> <i style="color: #c31212 "
+                                                                            class="fas fa-trash"></i></a>
+                        {% endif %}
                     </td>
+                    <td>{{ snippet.lang }}</td>
                     <td>{{ snippet.creation_date }}</td>
                     <td>{{ snippet.user | default:"Отсутствует"}}</td>
                 </tr>

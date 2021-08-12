@@ -1,5 +1,6 @@
-{% extends 'base.html' %}
 
+{% extends 'base.html' %}
+{% load my_tags %}
 {% block content %}
 <main role="main" class="mt-3 flex-shrink-0">
     <div class="container">
@@ -11,8 +12,8 @@
                         {% if not edit %}
                         Название: <input type="text" value={{ snippet.name }} class="form-control">
                         {% else %}
-                            <label">Введите имя: </label><br>
-                            <input type="text" name="name" value="{{snippet.name}}"/>
+                        <label">Введите имя: </label><br>
+                        <input type="text" name="name" value="{{snippet.name}}"/>
                         {% endif %}
                     </div>
                     <div class="col col-4">
@@ -27,7 +28,7 @@
                         {% if not edit %}
                         <div class="p-2 h-100" style="border:1px solid #ced4da; border-radius:5px;">
                             <p>
-                                {{ snippet.code }}
+                                {{ snippet.code | replace | safe }}
                             </p>
                             {% else %}
                             Code:<br>
@@ -43,6 +44,32 @@
             <button style="margin-left:120px" type="submit">Сохранить</button>
             {% endif %}
         </form>
+        <table style="margin-top:10px" border="1">
+            <tr>
+                <th>Автор</th>
+                <th>Комментарий</th>
+            </tr>
+            {% for comment in snippet.comments.all %}
+            <tr>
+                <td>{{comment.author.username}}</td>
+                <td> <img width="40px" height="40px"  src="{{ MEDIA_URL }}{{ comment.image }}"> {{comment.text}}</td>
+
+
+            </tr>
+            {% endfor %}
+        </table>
+        {% if request.user.is_authenticated %}
+        <form style="margin-top:20px" method="post" action="{% url 'comment_add' %}"  enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="hidden" name="snippet_id" value="{{ snippet.id }}">
+            <table>
+                 {{ form_comment.as_table }}
+            </table>
+            <button style="margin: 10px 0 0 90px" type="submit">
+                Отправить
+            </button>
+        </form>
+        {% endif %}
     </div>
 </main>
 {% endblock %}
