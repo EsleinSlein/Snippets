@@ -16,6 +16,7 @@ class Snippet(models.Model):
     code = models.TextField(max_length=5000, null=True)
     creation_date = models.DateTimeField(default=datetime.datetime.now, null=True)
     user = models.ForeignKey(to=User, on_delete=models.CASCADE, blank=True, null=True)
+    public = models.BooleanField(default=True,)
 
 
 class Comment(models.Model):
@@ -23,4 +24,8 @@ class Comment(models.Model):
     creation_date = models.DateTimeField(default=datetime.datetime.now)
     author = models.ForeignKey(to=User, on_delete=models.CASCADE, blank=True, null=True)
     snippet = models.ForeignKey(to='Snippet', on_delete=models.CASCADE, related_name="comments")
-    image = ContentTypeRestrictedFileField( upload_to= "images", max_upload_size=104857600,   content_types=[ 'image/jpeg',  'image/png'], null=True, blank=True)
+    image = ContentTypeRestrictedFileField(upload_to="images", max_upload_size=104857600,   content_types=['image/jpeg',  'image/png'], null=True, blank=True)
+
+
+    def __str__(self):
+        return f"Snippet: {self.name}"

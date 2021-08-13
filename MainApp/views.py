@@ -1,4 +1,4 @@
-from django.http import Http404
+from django.http import Http404, HttpResponseForbidden
 from django.shortcuts import render, redirect
 from MainApp.models import Snippet
 from MainApp.forms import SnippetForm ,UserRegistrationForm, CommentForm
@@ -31,6 +31,8 @@ def add_snippet_page(request):
 @login_required
 def delete_snippet_page(request, id):
     snippet = Snippet.objects.get(pk=id)
+    if snippet.user != request.user:
+        raise HttpResponseForbidden
     snippet.delete()
     return redirect('list-snippet')
 
@@ -38,11 +40,13 @@ def delete_snippet_page(request, id):
 @login_required
 def edit_snippet_page(request, id):
     snippet = Snippet.objects.get(pk=id)
+    form = SnippetForm(instance=snippet)
     if request.method == "GET":
         context = {
             'pagename': 'Страница сниппета',
             "snippet": snippet,
-            "edit": True
+            "edit": True,
+            "form": form
         }
         context.update(csrf(request))
         return render(request, 'pages/snippet-info.html', context)

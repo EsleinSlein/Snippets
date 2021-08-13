@@ -12,7 +12,7 @@
                         {% if not edit %}
                         Название: <input type="text" value={{ snippet.name }} class="form-control">
                         {% else %}
-                        <label">Введите имя: </label><br>
+                        <label>Введите имя: </label><br>
                         <input type="text" name="name" value="{{snippet.name}}"/>
                         {% endif %}
                     </div>
@@ -20,6 +20,9 @@
                         Дата создания:<input disabled type="text" value="{{ snippet.creation_date }}"
                                              class="form-control">
                     </div>
+                     <div name="public" class="col-2">
+                    Публичный: {{ form.public }}
+                     </div>
                 </div>
                 <hr>
                 <div class="row">
@@ -44,31 +47,32 @@
             <button style="margin-left:120px" type="submit">Сохранить</button>
             {% endif %}
         </form>
-        <table style="margin-top:10px" border="1">
-            <tr>
-                <th>Автор</th>
-                <th>Комментарий</th>
-            </tr>
-            {% for comment in snippet.comments.all %}
-            <tr>
-                <td>{{comment.author.username}}</td>
-                <td> <img width="40px" height="40px"  src="{{ MEDIA_URL }}{{ comment.image }}"> {{comment.text}}</td>
+        <div class="container">
+                <table style="margin-top:10px" border="1">
+                    <tr>
+                        <th>Автор</th>
+                        <th>Комментарий</th>
+                    </tr>
+                    {% for comment in snippet.comments.all %}
+                    <tr>
+                        <td>{{comment.author.username}}</td>
+                        <td> <img width="40px" height="40px"  src="{{ MEDIA_URL }}{{ comment.image }}"> {{comment.text}}</td>
 
-
-            </tr>
-            {% endfor %}
-        </table>
-        {% if request.user.is_authenticated %}
-        <form style="margin-top:20px" method="post" action="{% url 'comment_add' %}"  enctype="multipart/form-data">
-            {% csrf_token %}
-            <input type="hidden" name="snippet_id" value="{{ snippet.id }}">
-            <table>
-                 {{ form_comment.as_table }}
-            </table>
-            <button style="margin: 10px 0 0 90px" type="submit">
-                Отправить
-            </button>
-        </form>
+                    </tr>
+                    {% endfor %}
+                </table>
+        </div>
+            {% if request.user.is_authenticated %}
+            <form style="margin-top:20px" method="post" action="{% url 'comment_add' %}"  enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="hidden" name="snippet_id" value="{{ snippet.id }}">
+                <table>
+                     {{ form_comment.as_table }}
+                </table>
+                <button style="margin: 10px 0 0 90px" type="submit">
+                    Отправить
+                </button>
+            </form>
         {% endif %}
     </div>
 </main>
