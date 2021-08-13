@@ -18,6 +18,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from MainApp import views
 from MainApp.templatetags import my_tags
+from django.contrib import admin
 
 
 
@@ -35,6 +36,7 @@ urlpatterns = [
     path('comment/add', views.comment_add, name="comment_add"),
     path('snippet/ID_filter', my_tags.ID_filter, name="ID_filter"),
     path('snippet/lang_filter', my_tags.lang_filter, name="lang_filter"),
+    path('admin/', admin.site.urls),
 
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \
               +static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
