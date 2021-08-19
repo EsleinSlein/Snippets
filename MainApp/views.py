@@ -1,10 +1,11 @@
 from django.http import Http404, HttpResponseForbidden
 from django.shortcuts import render, redirect
-from MainApp.models import Snippet
-from MainApp.forms import SnippetForm ,UserRegistrationForm, CommentForm
+from MainApp.models import Snippet, Comment
+from MainApp.forms import SnippetForm, UserRegistrationForm, CommentForm
 from django.template.context_processors import csrf
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
+
 
 def index_page(request):
     context = {'pagename': 'PythonBin'}
@@ -126,4 +127,13 @@ def comment_add(request):
         return redirect(f'/snippet/{snippet_id}')
     raise Http404
 
+
+@login_required
+def comment_delete(request, id):
+    comment = Comment.objects.get(pk=id)
+    if comment.author != request.user:
+        raise HttpResponseForbidden
+
+    comment.delete()
+    return redirect(f'/snippet/{comment.snippet_id}')
 

@@ -1,0 +1,236 @@
+[
+  {
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$216000$zjiYiphxDkqE$3rsEDkGf43Vo6N1bHGiLKsn4G8ATuJJzlBBxgHgGzVY=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "admini",
+      "first_name": "",
+      "last_name": "",
+      "email": "adasd@mail.ru",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2021-08-13T16:28:36.015Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$216000$cIaC4ntWVz4X$1ZYGmLyj45BdM5Cs8IPAOGIXrOJvsN5ubaMrEgiz6h8=",
+      "last_login": "2021-08-13T16:33:20.009Z",
+      "is_superuser": false,
+      "username": "user-1",
+      "first_name": "",
+      "last_name": "",
+      "email": "adasd@mail.ru",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2021-08-13T16:29:05.219Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+      "password": "pbkdf2_sha256$216000$1hcjanOCLDo4$FxfxrfiF6KHH8wo69ZlOJs4OQAAY8wpVoytooh/KNqM=",
+      "last_login": "2021-08-13T16:35:09.902Z",
+      "is_superuser": false,
+      "username": "user-2",
+      "first_name": "",
+      "last_name": "",
+      "email": "adasd@mail.ru",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2021-08-13T16:29:33.038Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 4,
+    "fields": {
+      "password": "pbkdf2_sha256$216000$Hhp798vMAXbJ$aaadlqxhn1xJ/2fnraU5PiCtv6BX/zB9tepAaQe6OHk=",
+      "last_login": "2021-08-13T16:30:54.048Z",
+      "is_superuser": true,
+      "username": "admin",
+      "first_name": "",
+      "last_name": "",
+      "email": "",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2021-08-13T16:30:22.160Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 5,
+    "fields": {
+      "password": "pbkdf2_sha256$216000$HEm616B3WdF9$WBHAcalTa7hBq4HPgb1g0e3HwqjSKqo0a6RSRnPOKl8=",
+      "last_login": "2021-08-13T16:37:17.759Z",
+      "is_superuser": false,
+      "username": "user-3",
+      "first_name": "",
+      "last_name": "",
+      "email": "adasd@mail.ru",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2021-08-13T16:37:10.725Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "MainApp.snippet",
+    "pk": 1,
+    "fields": {
+      "name": "admin1",
+      "lang": "py",
+      "code": "other",
+      "creation_date": "2021-08-13T16:31:17.361Z",
+      "user": 4,
+      "public": true
+    }
+  },
+  {
+    "model": "MainApp.snippet",
+    "pk": 2,
+    "fields": {
+      "name": "admin2",
+      "lang": "js",
+      "code": "nothing",
+      "creation_date": "2021-08-13T16:31:49.490Z",
+      "user": 4,
+      "public": true
+    }
+  },
+  {
+    "model": "MainApp.snippet",
+    "pk": 3,
+    "fields": {
+      "name": "admin3",
+      "lang": "cpp",
+      "code": "aas",
+      "creation_date": "2021-08-13T16:32:08.354Z",
+      "user": 4,
+      "public": true
+    }
+  },
+  {
+    "model": "MainApp.snippet",
+    "pk": 4,
+    "fields": {
+      "name": "user1-1",
+      "lang": "py",
+      "code": "sasa",
+      "creation_date": "2021-08-13T16:33:45.295Z",
+      "user": 2,
+      "public": true
+    }
+  },
+  {
+    "model": "MainApp.snippet",
+    "pk": 5,
+    "fields": {
+      "name": "user1-2",
+      "lang": "py",
+      "code": "ased",
+      "creation_date": "2021-08-13T16:34:02.114Z",
+      "user": 2,
+      "public": true
+    }
+  },
+  {
+    "model": "MainApp.snippet",
+    "pk": 6,
+    "fields": {
+      "name": "user1-3",
+      "lang": "py",
+      "code": "asdsdasda",
+      "creation_date": "2021-08-13T16:34:18.681Z",
+      "user": 2,
+      "public": true
+    }
+  },
+  {
+    "model": "MainApp.snippet",
+    "pk": 7,
+    "fields": {
+      "name": "user2-1",
+      "lang": "js",
+      "code": "asdas",
+      "creation_date": "2021-08-13T16:35:29.414Z",
+      "user": 3,
+      "public": true
+    }
+  },
+  {
+    "model": "MainApp.snippet",
+    "pk": 8,
+    "fields": {
+      "name": "user2-2",
+      "lang": "js",
+      "code": "asdasd",
+      "creation_date": "2021-08-13T16:35:45.746Z",
+      "user": 3,
+      "public": true
+    }
+  },
+  {
+    "model": "MainApp.snippet",
+    "pk": 9,
+    "fields": {
+      "name": "user2-3",
+      "lang": "js",
+      "code": "asdasdasd",
+      "creation_date": "2021-08-13T16:35:59.982Z",
+      "user": 3,
+      "public": true
+    }
+  },
+  {
+    "model": "MainApp.snippet",
+    "pk": 10,
+    "fields": {
+      "name": "user3-1",
+      "lang": "cpp",
+      "code": "asd",
+      "creation_date": "2021-08-13T16:37:38.806Z",
+      "user": 5,
+      "public": true
+    }
+  },
+  {
+    "model": "MainApp.snippet",
+    "pk": 11,
+    "fields": {
+      "name": "user3-2",
+      "lang": "cpp",
+      "code": "sad",
+      "creation_date": "2021-08-13T16:38:19.881Z",
+      "user": 5,
+      "public": true
+    }
+  },
+  {
+    "model": "MainApp.snippet",
+    "pk": 12,
+    "fields": {
+      "name": "user3-3",
+      "lang": "cpp",
+      "code": "as",
+      "creation_date": "2021-08-13T16:38:47.222Z",
+      "user": 5,
+      "public": true
+    }
+  }
+]

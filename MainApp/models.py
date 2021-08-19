@@ -20,7 +20,7 @@ class Snippet(models.Model):
 
 
 class Comment(models.Model):
-    text = models.TextField(max_length=2000, null=True)
+    text = models.TextField(max_length=2000, null=True, blank=True,)
     creation_date = models.DateTimeField(default=datetime.datetime.now)
     author = models.ForeignKey(to=User, on_delete=models.CASCADE, blank=True, null=True)
     snippet = models.ForeignKey(to='Snippet', on_delete=models.CASCADE, related_name="comments")

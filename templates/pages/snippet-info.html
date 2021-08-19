@@ -29,7 +29,7 @@
                     <div class="col">
 
                         {% if not edit %}
-                        <div class="p-2 h-100" style="border:1px solid #ced4da; border-radius:5px;">
+                        <div class="p-2 h-100" style="border:1px solid #ced4da; color:green; border-radius:5px; text-shadow:5px 2px 4px grey">
                             <p>
                                 {{ snippet.code | replace | safe }}
                             </p>
@@ -48,19 +48,23 @@
             {% endif %}
         </form>
         <div class="container">
-                <table style="margin-top:10px" border="1">
-                    <tr>
-                        <th>Автор</th>
-                        <th>Комментарий</th>
-                    </tr>
-                    {% for comment in snippet.comments.all %}
-                    <tr>
-                        <td>{{comment.author.username}}</td>
-                        <td> <img width="40px" height="40px"  src="{{ MEDIA_URL }}{{ comment.image }}"> {{comment.text}}</td>
+                <div style=" display: inline-grid;  justify-items: center; ">
+                    <p style="margin-top:10px">Комментарии:</p>
 
-                    </tr>
+                    {% for comment in snippet.comments.all %}
+                    <div class="comment" style=" width:100%; background:linear-gradient(to top, #d3e9ff, #59a8fd); padding-bottom:10px ">
+                        <div> {{comment.author.username}}  </div>
+                        <div class="create_date" style="padding-bottom:10px">{{ comment.creation_date }}</div>
+                        <div class="comment_text" > <img width="40px" height="40px"  src="{{ MEDIA_URL }}{{ comment.image }}" onerror="this.style.display='none'" > {{comment.text}}
+                    {% if request.user == comment.author %}
+
+                        <a href="{% url 'comment_delete' comment.id %}"> <i style="color: #c31212" class="fas fa-trash"></i></a>
+                        </div>
+                        {% endif %}
+                    </div>
+
                     {% endfor %}
-                </table>
+                </div>
         </div>
             {% if request.user.is_authenticated %}
             <form style="margin-top:20px" method="post" action="{% url 'comment_add' %}"  enctype="multipart/form-data">

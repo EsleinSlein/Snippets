@@ -34,6 +34,7 @@ urlpatterns = [
     path('logout', views.logout, name="logout"),
     path('register', views.register, name="register"),
     path('comment/add', views.comment_add, name="comment_add"),
+    path('comment/delete/<int:id>', views.comment_delete, name="comment_delete"),
     path('snippet/ID_filter', my_tags.ID_filter, name="ID_filter"),
     path('snippet/lang_filter', my_tags.lang_filter, name="lang_filter"),
     path('admin/', admin.site.urls),
