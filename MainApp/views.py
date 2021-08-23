@@ -53,8 +53,17 @@ def edit_snippet_page(request, id):
         return render(request, 'pages/snippet-info.html', context)
     snippet.name = request.POST.get("name")
     snippet.code = request.POST.get("code")
+    public = request.POST.get("public")
+    if public == "on":
+        public = "True"
+        snippet.public = public
+        snippet.save()
+        return redirect(f'/snippet/{snippet.id}')
+
+    public = "False"
+    snippet.public = public
     snippet.save()
-    return redirect('list-snippet')
+    return redirect(f'/snippet/{snippet.id}')
 
 
 def my_snippets(request):
@@ -65,14 +74,17 @@ def my_snippets(request):
 
 
 def snippets_page(request):
-    snippets = Snippet.objects.all()
-    counter = snippets.count
     if request.user.is_authenticated:
-        snippets = Snippet.objects.all()
+        snippets = Snippet.objects.filter(public=True)
+        counter = snippets.count
         context = {'pagename': 'Просмотр сниппетов', "snippets": snippets, "counter": counter}
         return render(request, 'pages/view_snippets.html', context)
-    context = {'pagename': 'Просмотр сниппетов', "snippets": snippets, "counter": counter, "private": True}
+    snippets = Snippet.objects.filter(public=True)
+    counter = snippets.count
+    context = {'pagename': 'Просмотр сниппетов', "snippets": snippets, "counter": counter}
     return render(request, 'pages/view_snippets.html', context)
+
+
 
 
 def snippet(request, id):
@@ -133,7 +145,6 @@ def comment_delete(request, id):
     comment = Comment.objects.get(pk=id)
     if comment.author != request.user:
         raise HttpResponseForbidden
-
     comment.delete()
     return redirect(f'/snippet/{comment.snippet_id}')
 
