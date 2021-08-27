@@ -26,6 +26,3 @@ class Comment(models.Model):
     snippet = models.ForeignKey(to='Snippet', on_delete=models.CASCADE, related_name="comments")
     image = ContentTypeRestrictedFileField(upload_to="images", max_upload_size=104857600,   content_types=['image/jpeg',  'image/png'], null=True, blank=True)
 
-
-    def __str__(self):
-        return f"Snippet: {self.name}"

@@ -50,7 +50,7 @@
                 </thead>
                 <tbody>
 
-                {% for snippet in snippets %}
+                {% for snippet in page_obj %}
                 <tr>
                     <td scope="row">{{ snippet.id }}</td>
                     <td>
@@ -74,5 +74,6 @@
             </div>
         </div>
     </div>
+    {% include 'pages/pagination.html' %}
 </div>
 {% endblock %}

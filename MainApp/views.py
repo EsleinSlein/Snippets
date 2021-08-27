@@ -5,13 +5,13 @@ from MainApp.forms import SnippetForm, UserRegistrationForm, CommentForm
 from django.template.context_processors import csrf
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
-
+from django.core.paginator import Paginator
 
 def index_page(request):
     context = {'pagename': 'PythonBin'}
     return render(request, 'pages/index.html', context)
 
-
+@login_required
 def add_snippet_page(request):
     if request.method == "GET":
         form = SnippetForm()
@@ -76,12 +76,18 @@ def my_snippets(request):
 def snippets_page(request):
     if request.user.is_authenticated:
         snippets = Snippet.objects.filter(public=True)
+        paginator = Paginator(snippets, 10)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
         counter = snippets.count
-        context = {'pagename': 'Просмотр сниппетов', "snippets": snippets, "counter": counter}
+        context = {'pagename': 'Просмотр сниппетов', "snippets": snippets, "counter": counter, 'page_obj': page_obj}
         return render(request, 'pages/view_snippets.html', context)
     snippets = Snippet.objects.filter(public=True)
+    paginator = Paginator(snippets, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     counter = snippets.count
-    context = {'pagename': 'Просмотр сниппетов', "snippets": snippets, "counter": counter}
+    context = {'pagename': 'Просмотр сниппетов', "snippets": snippets, "counter": counter, 'page_obj': page_obj}
     return render(request, 'pages/view_snippets.html', context)
 
 
