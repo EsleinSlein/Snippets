@@ -3,9 +3,14 @@ from django.shortcuts import render, redirect
 from MainApp.models import Snippet, Comment
 from MainApp.forms import SnippetForm, UserRegistrationForm, CommentForm
 from django.template.context_processors import csrf
-from django.contrib import auth
+from django.contrib import auth,  messages
 from django.contrib.auth.decorators import login_required
-from django.core.paginator import Paginator
+from MainApp.templatetags.my_tags import pagination
+from django.contrib.auth.models import User
+from django.db.models import Count
+
+
+
 
 def index_page(request):
     context = {'pagename': 'PythonBin'}
@@ -24,7 +29,8 @@ def add_snippet_page(request):
         if request.user.is_authenticated:
             snippet.user = request.user
         snippet.save()
-        return redirect('list-snippet')
+        messages.success(request, 'Сниппет успешно создан!')
+        return redirect('my_list-snippet')
     context = {'pagename': 'Добавление нового сниппета', "form": form}
     return render(request, 'pages/add_snippet.html', context)
 
@@ -35,7 +41,7 @@ def delete_snippet_page(request, id):
     if snippet.user != request.user:
         raise HttpResponseForbidden
     snippet.delete()
-    return redirect('list-snippet')
+    return redirect('my_list-snippet')
 
 
 @login_required
@@ -59,7 +65,6 @@ def edit_snippet_page(request, id):
         snippet.public = public
         snippet.save()
         return redirect(f'/snippet/{snippet.id}')
-
     public = "False"
     snippet.public = public
     snippet.save()
@@ -68,27 +73,38 @@ def edit_snippet_page(request, id):
 
 def my_snippets(request):
     snippets = Snippet.objects.filter(user_id=request.user)
+    lang_filter = request.POST.get("lang_filter")
+    if request.method == "POST":
+        snippets = Snippet.objects.filter(user_id=request.user).filter(lang=lang_filter)
+    page_obj = pagination(request, snippets)
     counter = snippets.count
-    context = {'pagename': 'Мои сниппеты', "snippets": snippets, "counter": counter}
+    context = {'pagename': 'Мои сниппеты', 'describe': 'все ваши', "snippets": snippets, "counter": counter, 'page_obj': page_obj}
     return render(request, 'pages/view_snippets.html', context)
 
 
 def snippets_page(request):
-    if request.user.is_authenticated:
-        snippets = Snippet.objects.filter(public=True)
-        paginator = Paginator(snippets, 10)
-        page_number = request.GET.get('page')
-        page_obj = paginator.get_page(page_number)
-        counter = snippets.count
-        context = {'pagename': 'Просмотр сниппетов', "snippets": snippets, "counter": counter, 'page_obj': page_obj}
-        return render(request, 'pages/view_snippets.html', context)
     snippets = Snippet.objects.filter(public=True)
-    paginator = Paginator(snippets, 10)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+    lang_filter = request.POST.get("lang_filter")
+    if lang_filter:
+        snippets = Snippet.objects.filter(public=True).filter(lang=lang_filter)
+    sort_user = request.GET.get("user")
+    if sort_user:
+        snippets = snippets.filter(user__username=sort_user)
+    page_obj = pagination(request, snippets)
     counter = snippets.count
-    context = {'pagename': 'Просмотр сниппетов', "snippets": snippets, "counter": counter, 'page_obj': page_obj}
+    users = User.objects.all().annotate(count_snippets=Count('snippet'))
+    users = [user for user in users if user.count_snippets > 0]
+    context = {'pagename': 'Просмотр сниппетов',
+               "snippets": snippets,
+               "counter": counter,
+               "users": users,
+               'page_obj': page_obj,
+               'describe': 'все публичные',
+               }
     return render(request, 'pages/view_snippets.html', context)
+    if request.user.is_authenticated:
+        return snippets_page(request)
+
 
 
 
@@ -127,6 +143,7 @@ def register(request):
     form = UserRegistrationForm(request.POST)
     if form.is_valid():
         form.save()
+        messages.success(request, 'Пользователь успешно создан!')
         return redirect('Home')
     context = {"form": form}
     return render(request, 'pages/register_page.html', context)

@@ -19,22 +19,31 @@
 
     <div class="row">
         <div class="col">
-            <p>На данной страницы отображатся все сниппеты.</p>
+            <p>На данной страницы отображатся {{describe }} сниппеты.</p>
             <hr>
         </div>
     </div>
-    <form action="{% url 'lang_filter' %}" id="view_snippet_form" method="post">
+    <form action=" " id="view_snippet_form" method="POST">
         {% csrf_token %}
 
         <label class="col">Язык программирования:
-            <select style="width:100px" name="lang_filter" required="" id="id_lang">
-                <option value="" selected="">---------</option>
+            <select style="width:100px" name="lang_filter" >
+                <option value="" >---------</option>
                 <option value="py">py</option>
                 <option value="js">js</option>
                 <option value="cpp">cpp</option>
-
+            </select><input type="submit" value="Применить фильтр"></label> </form>
+    <form action=" " id="view_snippet_form" method="GET">
+        {% csrf_token %}
+        <label class="col">Пользователь:
+            <select style="width:100px" name="user">
+                 <option value="" selected="">---------</option>
+                 {% for user in users %}
+                <option>{{ user.username }}</option>
+                {% endfor %}
             </select>
-            <input type="submit" value="Применить фильтр"></label>
+        <input type="submit" value="Применить фильтр"></label>
+
     </form>
     <div class="row">
         <div class="col">
