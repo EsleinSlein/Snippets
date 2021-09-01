@@ -50,8 +50,36 @@
             <table class="table table-striped">
                 <thead class="thead-dark">
                 <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Название</th>
+                   <th scope="col">
+                        {% if fields.id == 2 %}
+                        <a href="?sort=id">
+                            ID <i class="fas fa-caret-up"></i>
+                        </a>
+                        {% elif fields.id == 1 %}
+                        <a href="?sort=-id">
+                            ID <i class="fas fa-caret-down"></i>
+                        </a>
+                        {% else %}
+                        <a href="?sort=id">
+                            ID
+                        </a>
+                        {% endif %}
+                    </th>
+                    <th scope="col">
+                        {% if fields.name == 2 %}
+                        <a href="?sort=name">
+                           Название<i class="fas fa-caret-up"></i>
+                        </a>
+                        {% elif fields.name == 1 %}
+                        <a href="?sort=-name">
+                           Название <i class="fas fa-caret-down"></i>
+                        </a>
+                        {% else %}
+                        <a href="?sort=name">
+                            Название
+                        </a>
+                        {% endif %}
+                    </th>
                     <th scope="col">Язык</th>
                     <th scope="col">Дата создания</th>
                     <th scope="col">Создатель</th>

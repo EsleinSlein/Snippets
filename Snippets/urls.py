@@ -19,14 +19,14 @@ from django.conf.urls.static import static
 from MainApp import views
 from MainApp.templatetags import my_tags
 from django.contrib import admin
-
+from django.views.decorators.cache import cache_page
 
 
 urlpatterns = [
-    path('', views.index_page, name="Home"),
+    path('', cache_page(60*15)(views.index_page), name="Home"),
     path('snippets/add', views.add_snippet_page, name="add-snippet"),
     path('snippet/<int:id>', views.snippet, name="snippet-page"),
-    path('snippets/list', views.snippets_page, name="list-snippet"),
+    path('snippets/list',views.snippets_page, name="list-snippet"),
     path('snippets/my_list', views.my_snippets, name="my_list-snippet"),
     path('snippet/delete/<int:id>', views.delete_snippet_page, name="snippet-delete"),
     path('snippet/edit/<int:id>', views.edit_snippet_page, name="snippet-edit"),

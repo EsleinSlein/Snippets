@@ -72,17 +72,26 @@ def edit_snippet_page(request, id):
 
 
 def my_snippets(request):
+    fields = {"id": 0, "name": 0, "creation_date": 0}
     snippets = Snippet.objects.filter(user_id=request.user)
     lang_filter = request.POST.get("lang_filter")
     if request.method == "POST":
         snippets = Snippet.objects.filter(user_id=request.user).filter(lang=lang_filter)
+    sort_field = request.GET.get("sort")
+    if sort_field is not None:
+        if "-" in sort_field:
+            fields[sort_field.replace("-", "")] = 2
+        else:
+            fields[sort_field] = 1
+        snippets = snippets.order_by(sort_field)
     page_obj = pagination(request, snippets)
     counter = snippets.count
-    context = {'pagename': 'Мои сниппеты', 'describe': 'все ваши', "snippets": snippets, "counter": counter, 'page_obj': page_obj}
+    context = {'pagename': 'Мои сниппеты', 'describe': 'все ваши', "snippets": snippets, "counter": counter, 'page_obj': page_obj, "fields": fields}
     return render(request, 'pages/view_snippets.html', context)
 
 
 def snippets_page(request):
+
     snippets = Snippet.objects.filter(public=True)
     lang_filter = request.POST.get("lang_filter")
     if lang_filter:
@@ -90,6 +99,15 @@ def snippets_page(request):
     sort_user = request.GET.get("user")
     if sort_user:
         snippets = snippets.filter(user__username=sort_user)
+
+    fields = {"id": 0, "name": 0, "creation_date": 0}
+    sort_field = request.GET.get("sort")
+    if sort_field is not None:
+        if "-" in sort_field:
+            fields[sort_field.replace("-", "")] = 2
+        else:
+            fields[sort_field] = 1
+        snippets = snippets.order_by(sort_field)
     page_obj = pagination(request, snippets)
     counter = snippets.count
     users = User.objects.all().annotate(count_snippets=Count('snippet'))
@@ -100,6 +118,7 @@ def snippets_page(request):
                "users": users,
                'page_obj': page_obj,
                'describe': 'все публичные',
+               "fields": fields,
                }
     return render(request, 'pages/view_snippets.html', context)
     if request.user.is_authenticated:
