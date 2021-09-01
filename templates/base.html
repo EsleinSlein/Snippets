@@ -7,8 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="shortcut icon" type="image/png" href="static/images/logo.png"/>
     <link rel="shortcut icon" type="image/png" href="static/images/logo.png"/>
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
-          integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <title>{{pagename}}</title>
 
     <!-- Bootstrap core CSS -->
@@ -30,6 +29,12 @@
 
         code {
             font-size: 80%;
+        }
+        .error {
+            background-color:#e44242;
+        }
+        .success {
+            background-color: #6cf900;
         }
 
 
@@ -92,10 +97,11 @@
                     {% endif %}
         </div>{% if messages %}
         {% for message in messages %}
-            <div style="background-color: #3dfd81; position:fixed; margin: 5%; width:90%; padding-left:40%; font-size: 20px;" class="{{ message.tags }}">
+            <div style=" position:fixed; margin: 5%; width:90%; padding-left:40%; font-size: 20px;" class="{{ message.tags }}">
                 {{ message|safe }}
-                <a style="color: red; padding-right: 5px; font-size: 19px;" href="" class="close">x</a>
+                <a style="color: black; padding-right: 5px; font-size: 19px;" href="" class="close">x</a>
             </div>
+
         {% endfor %}
 {% endif %}
     </nav>

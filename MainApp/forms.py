@@ -1,4 +1,4 @@
-from django.forms import ModelForm, TextInput, Textarea, IntegerField, CharField, ValidationError, PasswordInput
+from django.forms import forms, ModelForm, TextInput, Textarea, IntegerField, CharField, ValidationError, PasswordInput
 from MainApp.models import Snippet, Comment
 from django.contrib.auth.models import User
 

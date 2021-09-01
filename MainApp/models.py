@@ -20,6 +20,7 @@ class Snippet(models.Model):
     public = models.BooleanField(default=True,)
 
 
+
 class Comment(models.Model):
     text = models.TextField(max_length=2000, null=True, blank=True,)
     creation_date = models.DateTimeField(default=datetime.datetime.now)

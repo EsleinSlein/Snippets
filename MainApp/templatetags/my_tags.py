@@ -1,7 +1,7 @@
 from django import template
 from MainApp.models import Snippet
 from django.shortcuts import render, redirect
-from django.http import Http404
+from django.contrib import messages
 from django.core.paginator import Paginator
 register = template.Library()
 
@@ -26,6 +26,9 @@ def ID_filter(request):
         if request.method == "GET":
             id = request.GET.get("number")
         snippets = Snippet.objects.filter(pk=id)
+        if not snippets.exists():
+            messages.error(request, 'Сниппет не найден!')
+            return redirect('Home')
         page_obj = pagination(request, snippets)
         context = {'pagename': 'Cниппет', "snippets": snippets, 'page_obj': page_obj}
         return render(request, 'pages/view_snippets.html', context)
