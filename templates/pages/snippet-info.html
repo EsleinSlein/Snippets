@@ -53,14 +53,14 @@
 
         </form>
         <div class="container">
-                <div style=" display: inline-grid;  justify-items: center; ">
+                <div>
                     <p style="margin-top:10px">Комментарии:</p>
 
                     {% for comment in snippet.comments.all %}
-                    <div class="comment" style=" width:100%; background:linear-gradient(to top, #d3e9ff, #59a8fd); padding-bottom:10px ">
+                    <div  class="comment" style=" width:100%; background-color: #d3e9ff; padding-bottom:10px">
                         <div> {{comment.author.username}}  </div>
                         <div class="create_date" style="padding-bottom:10px">{{ comment.creation_date }}</div>
-                        <div class="comment_text" > <img width="40px" height="40px"  src="{{ MEDIA_URL }}{{ comment.image }}" onerror="this.style.display='none'" > {{comment.text}}
+                        <div style="border-bottom:dotted 1px" class="comment_text" > <img width="40px" height="40px"  src="{{ MEDIA_URL }}{{ comment.image }}" onerror="this.style.display='none'" > {{comment.text}}
                     {% if request.user == comment.author %}
 
                         <a href="{% url 'comment_delete' comment.id %}"> <i style="color: #c31212" class="fas fa-trash"></i></a>

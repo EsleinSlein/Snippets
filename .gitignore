@@ -1,7 +1,7 @@
 .idea/
 *venv/
 *.pyc
-db.*
+
 media/
 staticfiles/
 ssh

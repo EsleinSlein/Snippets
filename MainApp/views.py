@@ -91,16 +91,16 @@ def my_snippets(request):
 
 
 def snippets_page(request):
-
+    fields = {"id": 0, "name": 0, "creation_date": 0}
     snippets = Snippet.objects.filter(public=True)
+    users = User.objects.all().annotate(count_snippets=Count('snippet'))
+    users = [user for user in users if user.count_snippets > 0]
     lang_filter = request.POST.get("lang_filter")
     if lang_filter:
         snippets = Snippet.objects.filter(public=True).filter(lang=lang_filter)
     sort_user = request.GET.get("user")
     if sort_user:
         snippets = snippets.filter(user__username=sort_user)
-
-    fields = {"id": 0, "name": 0, "creation_date": 0}
     sort_field = request.GET.get("sort")
     if sort_field is not None:
         if "-" in sort_field:
@@ -110,8 +110,7 @@ def snippets_page(request):
         snippets = snippets.order_by(sort_field)
     page_obj = pagination(request, snippets)
     counter = snippets.count
-    users = User.objects.all().annotate(count_snippets=Count('snippet'))
-    users = [user for user in users if user.count_snippets > 0]
+
     context = {'pagename': 'Просмотр сниппетов',
                "snippets": snippets,
                "counter": counter,
@@ -180,6 +179,9 @@ def comment_add(request):
             comment.save()
         return redirect(f'/snippet/{snippet_id}')
     raise Http404
+
+
+
 
 
 @login_required
