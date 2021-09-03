@@ -142,8 +142,8 @@ def login(request):
         if user is not None:
             auth.login(request, user)
         else:
-            # Return error message
-            pass
+            messages.error(request, 'Пользователь не найден!')
+            return redirect('Home')
     return redirect('Home')
 
 

@@ -95,18 +95,19 @@
                     </div>
                 </div>
                     {% endif %}
-        </div>{% if messages %}
+        </div>
+        {% if messages %}
         {% for message in messages %}
             <div style=" position:fixed; margin: 5%; width:90%; padding-left:40%; font-size: 20px;" class="{{ message.tags }}">
                 {{ message|safe }}
                 <a style="color: black; padding-right: 5px; font-size: 19px;" href="" class="close">x</a>
             </div>
 
-        {% endfor %}
-{% endif %}
+            {% endfor %}
+        {% endif %}
     </nav>
 </header>
-</div>
+
 
 {% block content %}
 {% endblock %}
