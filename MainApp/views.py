@@ -16,7 +16,7 @@ def index_page(request):
     context = {'pagename': 'PythonBin'}
     return render(request, 'pages/index.html', context)
 
-@login_required
+@login_required()
 def add_snippet_page(request):
     if request.method == "GET":
         form = SnippetForm()
