@@ -3,6 +3,5 @@
 *.pyc
 db.*
 media/
-staticfiles/
 ssh
 ssh.pub
