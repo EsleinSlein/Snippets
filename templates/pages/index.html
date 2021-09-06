@@ -16,16 +16,25 @@
                 <p>Добро пожаловать, уважаемый пользователь!
                 <p>На этом сайте ты сможешь сохранить свои заготовки кода на различных языках программирования<br>
                     А также делиться ими с другими пользователями.
-                    Чтобы добавить сниппет нужно зарегистрироваться!
+                Чтобы <u>добавить сниппет нужно зарегистрироваться!</u>
                 <hr>
             </div>
         </div>
+                    {% if request.user.is_authenticated %}
 
         <div class="row mt-3">
             <div class="col-4 offset-4">
                 <a href="{% url 'add-snippet' %}" class="btn btn-secondary btn-block">Добавить сниппет</a>
             </div>
+        </div>       {%else%}
+
+        <div class="row mt-3">
+            <div class="col-4 offset-4">
+                <a href=" " class="btn btn-secondary btn-block">Добавить сниппет</a>
+            </div>
         </div>
+
+                    {%endif%}
 
         <div class="row mt-3">
             <div class="col">

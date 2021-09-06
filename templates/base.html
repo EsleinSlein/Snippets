@@ -5,13 +5,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="shortcut icon" type="image/png" href="static\images\logo.png"/>
-    <link rel="shortcut icon" type="image/png" href="static\images\logo.png"/>
+    <link rel="shortcut icon" type="image/png" href="static/images/logo.png"/>
+    <link rel="shortcut icon" type="image/png" href="static/images/logo.png"/>
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
     <title>{{pagename}}</title>
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="{% static '\css\bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <!-- Custom styles for this template -->
     <style>
         main > .container {
@@ -62,7 +62,12 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav mr-auto">
+                    {% if request.user.is_authenticated %}
                     <li class="form-inline" style="margin-right:10px"><a class="btn btn-outline-info" href="{% url 'add-snippet' %}">Добавить сниппет</a></li>
+                    {%else%}
+                    <li class="form-inline" style="margin-right:10px"><a class="btn btn-outline-info" href=" ">Добавить сниппет </a></li>
+
+                    {%endif%}
                     <li class="form-inline" style="margin-right:10px"><a class="btn btn-outline-info" href="{% url 'list-snippet'%} ">Посмотреть сниппеты</a></li>
 
 
