@@ -1,3 +1,5 @@
+# Для запуска выполнить следующие комманды:
+
 install requirements: 
 `pip install -r requirements.txt`
 
